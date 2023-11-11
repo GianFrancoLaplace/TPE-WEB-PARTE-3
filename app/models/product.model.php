@@ -1,39 +1,16 @@
 <?php 
-include_once 'config.php';
 include_once 'app/controllers/product.controller.php';
 
 class ProductModel{
     private $db;
     function __construct(){
-        $this->db = $this->getConnection();
-        $this->_deploy();
+        $this->db = $this->getConnection();     
     }
-
-    function _deploy()
-{
-    $query = $this->db->query('SHOW TABLES LIKE "productos"');
-    $tables = $query->fetchAll();
-    if (count($tables) == 0) {
-        $sql = <<<END
-    CREATE TABLE `productos` (
-        `ID` int(11) NOT NULL AUTO_INCREMENT,
-        `Nombre` varchar(100) NOT NULL,
-        `Descripcion` text NOT NULL,
-        `Precio` double NOT NULL,
-        `Peso` double NOT NULL,
-        `Categoria` varchar(45) NOT NULL,
-        `ID_Marca` int(11) NOT NULL,
-        `Img` text NOT NULL,
-        PRIMARY KEY (`ID`),
-        FOREIGN KEY (`ID_Marca`) REFERENCES `marcas` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-END;
-        $this->db->query($sql);
-    }
-}
 
     function getConnection(){
-        return new PDO("mysql:host=" . DB_HOST .";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
+        return new PDO('mysql:host=localhost;'
+        .'dbname=gimnasio;charset=utf8'
+        , 'root', '');
     }
     //listado de todo
     function getAll(){ 
