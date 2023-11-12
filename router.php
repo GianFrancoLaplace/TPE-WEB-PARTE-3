@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'libs/router.php';
 
-require_once 'app/controllers/task.api.controller.php';
+require_once 'app/controllers/product.api.controller.php';
 require_once 'app/controllers/user.api.controller.php';
 
 $router = new Router();

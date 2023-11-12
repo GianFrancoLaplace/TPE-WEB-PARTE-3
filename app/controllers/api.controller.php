@@ -1,19 +1,16 @@
-<?php
-require_once 'app/views/api.view.php';
+<?php 
+    abstract class ApiController{
+        protected $view; //para que accedan los hijos
+        protected $data;
 
-abstract class ApiController
-{
-    protected $view;
-    private $data;
+        function __construct(){
+            $this->view = new ApiView();
+            $this->data = file_get_contents('php://input');
+            //es para leer la entrada de datos del form
+            //queremos que sea un arreglo lo que se manda
+        }
 
-    function __construct()
-    {
-        $this->view = new ApiView();
-        $this->data = file_get_contents('php://input');
+        function getData(){
+            return json_decode($this->data); //es para transformar a json
+        }
     }
-
-    function getData()
-    {
-        return json_decode($this->data);
-    }
-}

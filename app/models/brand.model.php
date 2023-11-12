@@ -23,15 +23,15 @@ class BrandModel{ //modelo tabla marca
         return $marcas;
     }
 
-    function getNombreMarca($nombreMarca) {
-        $query = $this->db->prepare('SELECT ID, Nombre FROM marcas WHERE Nombre = ?');
+    function getById($id) {
+        $query = $this->db->prepare('SELECT ID, Nombre FROM marcas WHERE ID = ?');
         
-        $query->execute([$nombreMarca]);
+        $query->execute([$id]);
         
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function getPaisOrigen($paisOrigen) {
+    function getByPaisOrigen($paisOrigen) {
         $query = $this->db->prepare('SELECT ID FROM marcas WHERE Pais_Origen = ?');
         
         $query->execute([$paisOrigen]);

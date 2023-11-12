@@ -28,13 +28,13 @@ class ProductModel{
         return $query->fetch(PDO::FETCH_OBJ);
     }
     //te muestra un registro solo, eso pasa cuando cliqueas en cada item
-    function get($id){
+    function getById($id){
         $query = $this->db->prepare('SELECT * FROM  productos WHERE Id= ?');
         $query->execute([$id]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
     //listado por nombre de la marca. Nose si se hace asi o con un id_Marca esta bien pero el tema es que tenes que saber el id de marcas. 
-    function getMarca($idMarca) {
+    function getByMarca($idMarca) {
         $query = $this->db->prepare('SELECT ID, Nombre, Precio, Img FROM productos WHERE ID_Marca = ?');
         
         $query->execute([$idMarca]);
