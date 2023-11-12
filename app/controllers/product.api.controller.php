@@ -5,7 +5,6 @@ require_once 'app/views/api.view.php';
  
 class ProductApiController extends ApiController{
     private $model;
-    // private $data;
 
     function __construct(){
         parent::__construct(); //super()
@@ -14,8 +13,10 @@ class ProductApiController extends ApiController{
 
     function get($params = []) {
         if(empty($params)){
-          $productos = $this->model->getAll();
-          return $this->view->response($productos,200);
+            $filterPending = false;
+                 
+            $productos = $this->model->getAll();
+            return $this->view->response($productos,200);
         }
         else {
           $productos = $this->model->getById($params[":ID"]);
@@ -33,10 +34,10 @@ class ProductApiController extends ApiController{
 
         if ($producto) {
             $this->model->remove($producto_id);
-            $this->view->response("Producto id=$producto_id eliminada con éxito", 200);
+            $this->view->response(['msg' => 'Producto id=$producto_id fue eliminado con éxito'], 200);
         }
         else 
-            $this->view->response("Producto id=$producto_id not found", 404);
+            $this->view->response(['msg' => 'Producto id=$producto_id no ha sido encontrado'], 404);
     }
 
     function create($params = []){
@@ -50,7 +51,7 @@ class ProductApiController extends ApiController{
         $img = $product->img;
 
         $id = $this->model->insert($name, $des, $price, $weight, $category, $brand, $img);
-        $this->view->response('La tarea fue insertada con el id = '.$id, 201);
+        $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
     }
 
 

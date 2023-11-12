@@ -123,12 +123,6 @@ class ProductModel{
         $query = $this->db -> prepare('DELETE FROM  productos WHERE id = ?');
         $query -> execute([$id]);
     }
-
-    function update($id, $newPrice)
-    {
-        $query = $this->db->prepare('UPDATE productos SET Precio = ?,  WHERE id = ?');
-        $query->execute([$newPrice, $id]);
-    }
 }
 
 //todos los productos de origen Argentino 

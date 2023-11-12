@@ -7,6 +7,8 @@ require_once 'app/controllers/user.api.controller.php';
 
 $router = new Router();
 
+$router->addRoute("auth", "POST", "AuthApiController", "login");
+
 #                 endpoint      verbo     controller           método
 $router->addRoute('productos', 'GET', 'ProductApiController', 'get'); # ProductApiController->get($params)
 $router->addRoute('productos', 'POST', 'ProductApiController', 'create');

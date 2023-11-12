@@ -27,7 +27,7 @@
     
 
 
-    function getUser($user)
+    function getByUser($user)
     {
         $query = $this->db->prepare('SELECT * FROM usuarios WHERE user = ?');
         $query->execute([$user]);
