@@ -1,7 +1,7 @@
 <?php
-require_once "./api/controller/table.api.controller.php";
-require_once "./api/helpers/token.helper.php";
-require_once "./api/models/user.model.php";
+// require_once "./api/controller/table.api.controller.php";
+// require_once "./api/helpers/token.helper.php";
+require_once "app/models/users.model.php";
 
 class AuthApiController extends ApiController{
     private $model;
