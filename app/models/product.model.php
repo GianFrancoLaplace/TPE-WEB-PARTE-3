@@ -1,5 +1,5 @@
 <?php 
-    require_once 'app/controllers/product.controller.php';
+    require_once 'app/controllers/product.api.controller.php';
     require_once 'app/models/model.php';
 
     class ProductModel extends Model{

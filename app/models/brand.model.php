@@ -1,5 +1,5 @@
 <?php 
-include_once 'app/controllers/product.controller.php';
+include_once 'app/controllers/product.api.controller.php';
 
 class BrandModel{ //modelo tabla marca
     private $db;

@@ -1,6 +1,7 @@
 <?php
 require_once 'app/controllers/api.controller.php';
 require_once 'app/models/brand.model.php';
+require_once 'app/models/product.model.php';
 require_once 'app/views/api.view.php';
  
 class ProductApiController extends ApiController{
