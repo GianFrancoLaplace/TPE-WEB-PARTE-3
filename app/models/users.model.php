@@ -1,5 +1,5 @@
 <?php
-    include_once 'config.php';
+    include_once './TPE-WEB-PARTE-3/config.php';
     class UsersModel{
         private $adminUser;
         private $password_hashed;

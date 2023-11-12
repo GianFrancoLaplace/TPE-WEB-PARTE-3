@@ -9,11 +9,7 @@
 
         function __construct() {
             $this->model = new UsersModel();
-            $this->view = new AuthView();
-        }
-
-        function showLogin() {
-            $this->view->showLogin();
+            $this->view = new ApiView();
         }
 
         public function auth() {
@@ -21,7 +17,6 @@
             $password = $_POST['password'];
 
             if (empty($username) || empty($password)) {
-                $this->view->showLogin('Faltan completar datos');
                 return;
             }
 
@@ -30,18 +25,7 @@
             $hash = password_hash($password, PASSWORD_DEFAULT);
             
 
-            if ($user && password_verify($password, $hash)) {
-                // ACA LO AUTENTIQUE
-                AuthHelper::login($user);
-                header('Location: ' . BASE_URL);
-            } else {
-                $this->view->showLogin('Usuario inválido');
-            }
-        }
-
-        public function logout() {
-            AuthHelper::logout();
-            header('Location: ' . BASE_URL);    
+            
         }
     }
 

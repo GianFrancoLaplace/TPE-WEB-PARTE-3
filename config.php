@@ -1,6 +1,6 @@
 <?php
 const BASE_URL = "api/gimnasio";
-const MYSQL_USER = 'root';
-const MYSQL_PASS = '';
-const MYSQL_DB = 'gimnasio';
-const MYSQL_HOST = 'localhost';
+const DB_USER = 'root';
+const DB_PASS = '';
+const DB_NAME = 'gimnasio';
+const DB_HOST = 'localhost';

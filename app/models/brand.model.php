@@ -1,4 +1,5 @@
 <?php 
+include_once './config.php';
 include_once 'app/controllers/product.controller.php';
 
 class BrandModel{ //modelo tabla marca
@@ -8,9 +9,7 @@ class BrandModel{ //modelo tabla marca
     }
 
     function getConnection(){
-        return new PDO('mysql:host=localhost;'
-        .'dbname=gimnasio;charset=utf8'
-        , 'root', '');
+        return new PDO('mysql:host=' . DB_HOST .';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
     }
     //listado de todo
     function getAll(){ 

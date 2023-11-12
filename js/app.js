@@ -1,4 +1,4 @@
-const URL = "api/tareas/";
+const URL = "api/gimnasio/";
 
 let products = [];
 
@@ -40,7 +40,7 @@ async function insertProduct(e) {
         let nProducts = await response.json();
 
         // inserto la tarea nuevo
-        tasks.push(nProducts);
+        products.push(nProducts);
         form.reset();
     } catch(e) {
         console.log(e);

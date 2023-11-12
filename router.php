@@ -5,11 +5,11 @@ require_once 'libs/router.php';
 $router = new Router();
 
 #                 endpoint      verbo     controller           método
-$router->addRoute('gimnasio', 'GET', 'ProductApiController', 'get'); # TaskApiController->get($params)
-$router->addRoute('gimnasio', 'POST', 'ProductApiController', 'create');
-$router->addRoute('gimnasio/:ID', 'GET', 'ProductApiController', 'get');
-$router->addRoute('gimnasio/:ID', 'PUT', 'ProductApiController', 'update');
-$router->addRoute('gimnasio/:ID', 'DELETE', 'ProductApiController', 'delete');
+$router->addRoute('productos', 'GET', 'ProductApiController', 'get'); # TaskApiController->get($params)
+$router->addRoute('productos', 'POST', 'ProductApiController', 'create');
+$router->addRoute('productos/:ID', 'GET', 'ProductApiController', 'get');
+$router->addRoute('productos/:ID', 'PUT', 'ProductApiController', 'update');
+$router->addRoute('productos/:ID', 'DELETE', 'ProductApiController', 'delete');
 
 //$router->addRoute('user/token', 'GET', 'UserApiController', 'getToken'); # UserApiController->getToken()
 

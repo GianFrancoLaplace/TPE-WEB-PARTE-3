@@ -1,4 +1,5 @@
 <?php
+require_once 'app/controllers/product.controller.php';
 
 class Route
 {
@@ -36,6 +37,7 @@ class Route
         }
         return true;
     }
+    
     public function run()
     {
         $controller = $this->controller;
