@@ -53,6 +53,4 @@ class ProductApiController extends ApiController{
         $id = $this->model->insert($name, $des, $price, $weight, $category, $brand, $img);
         $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
     }
-
-
 }

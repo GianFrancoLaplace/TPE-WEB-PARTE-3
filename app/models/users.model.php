@@ -1,58 +1,40 @@
 <?php
-    include_once 'config.php';
-    class UsersModel{
+    require_once 'app/models/model.php';
+    class UsersModel extends Model{
         private $adminUser;
         private $password_hashed;
-        private $db;
 
         function __construct(){
-            $this->db = $this->getConnection();
+            parent::__construct();
             $this->adminUser = $this->getUserAdmin();
             $this->password_hashed = $this->getPasswordAdmin();
             $this->registerUser($this->adminUser, $this->password_hashed);
         }
-    
-        function getConnection(){
-            return new PDO("mysql:host=" . DB_HOST .";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
-        }
 
-        public function getByUsername($username){
+        function getByUser($user){
             $query = $this->db->prepare('SELECT * FROM usuarios WHERE user = ?');
+            $query->execute([$user]);
+            $usuario = $query->fetch(PDO::FETCH_OBJ);
 
-            $query->execute([$username]);
+            return $usuario;
 
-            return $query->fetch(PDO::FETCH_OBJ);
         }
 
-    
+        function registerUser($user, $password){
+            $query = $this->db->prepare('INSERT INTO usuarios (user, password) VALUES (?, ?) ');
+            $query->execute([$user, $password]);
+        }
 
+        function getUserAdmin(){
+            $adminuser = "webadmin";
+            return $adminuser;
+        }
 
-    function getByUser($user)
-    {
-        $query = $this->db->prepare('SELECT * FROM usuarios WHERE user = ?');
-        $query->execute([$user]);
-        $usuario = $query->fetch(PDO::FETCH_OBJ);
-
-        return $usuario;
-
-    }
-
-    function registerUser($user, $password)
-    {
-        $query = $this->db->prepare('INSERT INTO usuarios (user, password) VALUES (?, ?) ');
-        $query->execute([$user, $password]);
-    }
-
-    function getUserAdmin(){
-        $adminuser = "webadmin";
-        return $adminuser;
-    }
-
-    function getPasswordAdmin(){
-        $clave = "admin";
-        $password_hashed = password_hash ($clave , PASSWORD_BCRYPT ); 
-        return $password_hashed;
-    }
+        function getPasswordAdmin(){
+            $clave = "admin";
+            $password_hashed = password_hash ($clave , PASSWORD_BCRYPT ); 
+            return $password_hashed;
+        }
     
 }
 
