@@ -8,6 +8,7 @@ GET  | http://localhost/TPE-WEB-PARTE-3/api/productos
 
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
   - Crear un producto con los siguientes parametros
+
      {
       "name": "Nombre del Producto",
       "des": "Descripción del Producto",
@@ -19,13 +20,14 @@ POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
       }
   
 GET | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
-  obtiene uno de los productos con el id indicado;
+  - obtiene uno de los productos con el id indicado;
   
 PUT | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
-  Permite actualizar el precio;
-  {
-  "price": 00
-  }
+  - Permite actualizar el precio;
+    `{
+      "price": 00
+    }`
+  
   
 DELETE | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
   Elimina el producto con el id indicado
