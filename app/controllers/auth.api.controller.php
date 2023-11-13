@@ -7,32 +7,11 @@
         private $model;
         public function __construct(){
             parent::__construct();
-            $this->model = new UsersModel();
-        }
-
-        public function login($params =[]){
-            $userData = $this->getData();
-            if(empty($userData->password) || empty($userData->name)){
-                $this->view->response(['msg' => 'Faltan completar campos'],400);
-            }
-
-            $userDB = $this->model->getByUser($userData->name);
-
-            if(empty($userDB))
-                $this->view->response(['msg'=> 'Usuario no encontrado'],401);
-
-            if(!password_verify($userData->password, $userDB->password))
-                $this->view->response(['msg'=> 'Contraseña incorrecta'],401);
-
-            //$token = TokenHelper::generate($userDB);
-            
-            //$response = ['user'=> $token];
-            //$this->view->response($response,200);
-
-
+            $this->model = new UserModel();
         }
 
         function getToken($params = []) {
+            //Obtengo encabezado de autorizacion:
             $basic = TokenApiHelper::getAuthHeaders(); // Darnos el header 'Authorization:' 'Basic: base64(usr:pass)'
 
             if(empty($basic)) {
@@ -48,25 +27,27 @@
             }
             
             //Validacion de user
-            if($user == "Nico" && $pass == "web") {
-                // Usuario es válido
-                
-                $token = TokenApiHelper::createToken($userdata);
-                $this->view->response($token);
-            } else {
-                $this->view->response('El usuario o contraseña son incorrectos.', 401);
-            }
-        }
-
-        private function getData($basic){
             $userpass = base64_decode($basic[1]); // user:pass
             $userpass = explode(":", $userpass); // ["user", "pass"]
 
             $user = $userpass[0];
             $pass = $userpass[1];
 
-            $userdata = [ "name" => $user, "id" => 123, "role" => 'admin' ]; // Llamar a la DB
+            $userdata = [ "name" => $user, "password" => $pass, "role" => 'admin' ]; 
+            
+            // Llamar a la DB
+            $userDB = $this->model->getByUser($userdata["name"]);
 
-            return $userdata;
+            if(empty($userDB))
+                return $this->view->response(['msg'=> 'Usuario no encontrado'],401);
+
+            if(!password_verify($userdata["password"], $userDB->password)){
+                return $this->view->response(['msg'=> 'Contraseña incorrecta'],401);
+            }
+            else{
+                //Todo correcto, creamos token
+                $token = TokenApiHelper::createToken($userdata);
+                $this->view->response($token);
+            }
         }
     }

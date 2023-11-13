@@ -1,20 +1,13 @@
 <?php 
-include_once 'app/controllers/product.api.controller.php';
+include_once 'app/controllers/product.controller.php';
+require_once 'app/models/model.php';
 
-class BrandModel{ //modelo tabla marca
-    private $db;
+class BrandModel extends Model{ //modelo tabla marca
     function __construct(){
-        $this->db = $this->getConnection();     
-    }
-
-    function getConnection(){
-        return new PDO('mysql:host=localhost;'
-        .'dbname=gimnasio;charset=utf8'
-        , 'root', '');
+        parent::__construct();
     }
     //listado de todo
     function getAll(){ 
-
         $query = $this->db -> prepare('SELECT * from marcas');
         $query -> execute();
     

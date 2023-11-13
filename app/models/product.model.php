@@ -58,34 +58,34 @@
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
 
-        //listado segun orden por precio asc
-        function getPrecioAsc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
+        // //listado segun orden por precio asc
+        // function getPrecioAsc() {
+        //     $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio');
+        //     $query->execute();
+        //     return $query->fetchAll(PDO::FETCH_OBJ);
+        // }
 
-        //listado segun orden precio desc
-        function getPrecioDesc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio DESC');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-        //listado segun orden nombre asc
-        function getNombreAsc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre ');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-        //listado segun orden nombre desc
-        function getNombreDesc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre DESC ');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
+        // //listado segun orden precio desc
+        // function getPrecioDesc() {
+        //     $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio DESC');
+        //     $query->execute();
+        //     return $query->fetchAll(PDO::FETCH_OBJ);
+        // }
+        // //listado segun orden nombre asc
+        // function getNombreAsc() {
+        //     $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre ');
+        //     $query->execute();
+        //     return $query->fetchAll(PDO::FETCH_OBJ);
+        // }
+        // //listado segun orden nombre desc
+        // function getNombreDesc() {
+        //     $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre DESC ');
+        //     $query->execute();
+        //     return $query->fetchAll(PDO::FETCH_OBJ);
+        // }
 
         function getOrderAsc($params){
-            $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY '.$params. ' ASC'
+            $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY '.$params. ' ASC';
             $query = $this->db->prepare($stg);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_OBJ);

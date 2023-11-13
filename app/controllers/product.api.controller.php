@@ -1,8 +1,8 @@
 <?php
 require_once 'app/controllers/api.controller.php';
-require_once 'app/models/brand.model.php';
 require_once 'app/models/product.model.php';
 require_once 'app/views/api.view.php';
+require_once 'app/helpers/token.api.helper.php';
  
 class ProductApiController extends ApiController{
     private $model;
@@ -13,13 +13,35 @@ class ProductApiController extends ApiController{
     }
 
     function get($params = []) {
+        var_dump($_GET);
+        die();
         if(empty($params)){
-            $filterPending = false;
-                 
+
+            //prodcuto?orden=asc
+            $filterCategory = null;
+            $orderByPrice = null;
             $productos = $this->model->getAll();
-            return $this->view->response($productos,200);
+            
+            //producto?category=creatina
+            if (isset($_GET['category'])) {
+                $filterCategory = $_GET['category']; //creatina
+                $productos = $this->model->getCategory($filterCategory);
+            }
+
+            // Verifica si se proporciona el parámetro 'order' en la URL
+            if (isset($_GET['order'])) {
+                $order = explode('.',$_GET['order']); //price.asc o name.desc
+                if($order[1]=='asc')
+                    $productos = $this->model->getOrderAsc($order[0]);
+                else 
+                    $productos = $this->model->getOrderDesc($order[0]);
+            }
+
+            // Devuelve la respuesta con los productos
+            return $this->view->response($productos, 200);
         }
         else {
+            //producto/2
           $productos = $this->model->getById($params[":ID"]);
           if(!empty($productos)) {
             return $this->view->response($productos,200);
@@ -42,6 +64,18 @@ class ProductApiController extends ApiController{
     }
 
     function create($params = []){
+        $user = TokenApiHelper::currentUser();
+
+        if(!$user){
+            $this->view->response("No autorizado",401);
+            return;
+        }
+
+        if($user->role!="admin"){
+            $this->view->response("Prohibido", 403);
+            return;
+        }
+
         $product = $this->getData();
         $name = $product->name;
         $des = $product->des;

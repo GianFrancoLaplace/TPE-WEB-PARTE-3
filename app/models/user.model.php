@@ -1,6 +1,6 @@
 <?php
     require_once 'app/models/model.php';
-    class UsersModel extends Model{
+    class UserModel extends Model{
         private $adminUser;
         private $password_hashed;
 
