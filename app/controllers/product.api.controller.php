@@ -17,8 +17,16 @@ class ProductApiController extends ApiController{
 
             //producto?orden=asc
             $filterCategory = null;
-            $orderByPrice = null;
-            $productos = $this->model->getAll();
+            $field = 'Nombre';
+            $orden = 'ASC';
+            $pagina = (!empty($_GET['pagina']) ? $_GET['pagina'] : 1);
+            $elemPorPagina = (!empty($_GET['elementosPorPagina']) ? $_GET['elementosPorPagina'] : 20);
+            $start_index = ($pagina - 1) * $elemPorPagina;
+
+            // $productos = $this->model->getAll($elemPorPagina, $start_index);
+            $productos = $this->model->getAll($field,$orden, $elemPorPagina, $start_index);
+            
+            // $productos = $this->model->getAll($elemPorPagina, $start_index);
             //producto?category=creatina
             if (isset($_GET['categoria'])) {
                 $filterCategory = $_GET['categoria']; //creatina
@@ -30,25 +38,14 @@ class ProductApiController extends ApiController{
             // Verifica si se proporciona el parámetro 'orden' en la URL
             if (isset($_GET['orden'])) {
                 $order = explode('.',$_GET['orden']); //price.asc o name.desc
-                if(isset($order[0]) && isset($order[1])){
-                    if($order[0]=='precio'){
-                        if($order[1]=='asc'){
-                            $productos = $this->model->getPrecioAsc();
-                        }
-                        if($order[1]=='desc'){
-                            $productos = $this->model->getPrecioDesc();
-                        }
-                    }
-                    if($order[0]=='nombre'){
-                        if($order[1]=='asc'){
-                            $productos = $this->model->getNombreAsc();
-                        }
-                        if($order[1]=='desc'){
-                            $productos = $this->model->getNombreDesc();
-                        }
-                    }
+                if (($order[0] == 'precio' || $order[0] == 'nombre') && ($order[1] == 'asc' || $order[1] == 'desc')){
+                    $field = ucfirst($order[0]);
+                    $orden = strtoupper($order[1]);
                 }
+                    
             }
+
+            $productos = $this->model->getAll($field,$orden, $elemPorPagina, $start_index);
              // Devuelve la respuesta con los productos
              return $this->view->response($productos, 200);
         }
@@ -69,10 +66,10 @@ class ProductApiController extends ApiController{
 
         if ($producto) {
             $this->model->remove($producto_id);
-            $this->view->response(['msg' => 'Producto id=$producto_id fue eliminado con éxito'], 200);
+            $this->view->response(['msg' => 'Producto id='.$producto_id.' fue eliminado con éxito'], 200);
         }
         else 
-            $this->view->response(['msg' => 'Producto id=$producto_id no ha sido encontrado'], 404);
+            $this->view->response(['msg' => 'Producto id='.$producto_id.' no ha sido encontrado'], 404);
     }
 
     function create($params = []){

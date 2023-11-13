@@ -7,8 +7,8 @@ class BrandModel extends Model{ //modelo tabla marca
         parent::__construct();
     }
     //listado de todo
-    function getAll(){ 
-        $query = $this->db -> prepare('SELECT * from marcas');
+    function getAll($elemPorPagina, $start_index){ 
+        $query = $this->db -> prepare("SELECT * from marcas LIMIT $elemPorPagina OFFSET $start_index");
         $query -> execute();
     
         $marcas = $query -> fetchAll(PDO::FETCH_OBJ);

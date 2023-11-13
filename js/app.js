@@ -1,22 +1,23 @@
-const URL = "api/tareas/";
+const URL = "api/productos/";
 
 let products = [];
 
+document.getElementById("id").addEventListener('click', getById());  //button
+
 async function getAll() {
-    try {
-        let response = await fetch(URL);
+    try { //por si te confundis de enpoint
+        let response = await fetch(URL); //obtengo todas com fetch, por defecto GET
         if (!response.ok) {
             throw new Error('Recurso no existe');
         }
-        tasks = await response.json();
+        products = await response.json(); //cambia formato json
+        console.log(products);
     } catch(e) {
         console.log(e);
     }
 }
 
-/**
- * Inserta la tarea via API REST
- */
+
 async function insertProduct(e) {
     e.preventDefault();
     
@@ -39,7 +40,7 @@ async function insertProduct(e) {
 
         let nProducts = await response.json();
 
-        // inserto la tarea nuevo
+        // inserto la tarea nueva
         tasks.push(nProducts);
         form.reset();
     } catch(e) {
@@ -50,7 +51,7 @@ async function insertProduct(e) {
 async function deleteProduct(e) {
     e.preventDefault();
     try {
-        let id = e.target.dataset.task;
+        let id = e.target.dataset.products;
         let response = await fetch(URL + id, {method: 'DELETE'});
         if (!response.ok) {
             throw new Error('Recurso no existe');
@@ -63,3 +64,16 @@ async function deleteProduct(e) {
     }
 }
 
+async function getById(){
+    try { 
+        let id = e.target.dataset.products;
+        let response = await fetch(URL + id);
+        if (!response.ok) {
+            throw new Error('Recurso no existe');
+        }
+        products = await response.json(); //cambia formato json
+        console.log(products);
+    } catch(e) {
+        console.log(e);
+    }
+}

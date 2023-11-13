@@ -8,25 +8,19 @@
         }
         //listado de todo
 
-        function getAll(){
-            $query = $this->db->prepare('SELECT * from productos');
+        function getAll($field, $order, $elemPorPagina, $start_index){
+            $query = $this->db->prepare("SELECT ID, Nombre, Precio FROM productos ORDER BY $field $order LIMIT $elemPorPagina OFFSET $start_index");
             $query->execute();
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
-        
-        function getSomething($params = null){ 
-            $str = 'SELECT * from productos';
-                if ($params['condition']){
-                    $str .=  ' WHERE '. $params['condition'] . '= ? ';
-                }
-                    
-                if ($params['order']){
-                    $str .=  'ORDER BY '. $params['value'];
-                }  
-                $query = $this->db->prepare($str);
-                $query->execute([$params['value']]);
-                return $query->fetch(PDO::FETCH_OBJ);
+
+        //listado si es crea o prote
+        function getCategory($category) {
+            $query = $this->db->prepare('SELECT ID, Nombre, Precio, Img FROM  productos WHERE Categoria = ?');
+            $query->execute([$category]);
+            return $query->fetchAll(PDO::FETCH_OBJ);
         }
+    
         function getPaisOrigen($paisOrigen){
             $query = $this->db->prepare('SELECT a.ID, a.Nombre, a.Precio, a.Img FROM productos a INNER JOIN marcas b ON a.ID_Marca = b.ID WHERE b.Pais_Origen = ?');
             $query->execute([$paisOrigen]);
@@ -46,53 +40,6 @@
             
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
-
-        //listado si es crea o prote
-        function getCategory($category) {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio, Img FROM  productos WHERE Categoria = ?');
-            $query->execute([$category]);
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        //listado segun orden por precio asc
-        function getPrecioAsc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        //listado segun orden precio desc
-        function getPrecioDesc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Precio DESC');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-        //listado segun orden nombre asc
-        function getNombreAsc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre ');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-        //listado segun orden nombre desc
-        function getNombreDesc() {
-            $query = $this->db->prepare('SELECT ID, Nombre, Precio FROM productos ORDER BY Nombre DESC ');
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_OBJ);
-        }
-
-        // function getOrderAsc($params){
-        //     $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY ASCE'.$params. ' ASC';
-        //     $query = $this->db->prepare($stg);
-        //     $query->execute();
-        //     return $query->fetchAll(PDO::FETCH_OBJ);
-        // }
-
-        // function getOrderDesc($params){
-        //     $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY '. $params.' DESC';
-        //     $query = $this->db->prepare($stg);
-        //     $query->execute();
-        //     return $query->fetchAll(PDO::FETCH_OBJ);
-        // }
 
         function updateNombre($id, $nuevoNombre) {
             $query = $this->db->prepare('UPDATE productos SET Nombre = ? WHERE id = ?');
