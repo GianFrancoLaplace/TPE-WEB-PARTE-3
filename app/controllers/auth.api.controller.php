@@ -10,13 +10,9 @@
             $this->model = new UserModel();
         }
 
-        function getToken($params = []) {
+        function getToken($params = []) { //consulta GET -- authorization -- Basic Auth 
             //Obtengo encabezado de autorizacion:
             $basic = TokenApiHelper::getAuthHeaders(); // Darnos el header 'Authorization:' 'Basic: base64(usr:pass)'
-
-            var_dump($_SERVER);
-            die();
-
             if(empty($basic)) {
                 $this->view->response('No envió encabezados de autenticación.', 401);
                 return;
@@ -36,7 +32,7 @@
             $user = $userpass[0];
             $pass = $userpass[1];
 
-            $userdata = [ "name" => $user, "password" => $pass, "role" => 'admin' ]; 
+            $userdata = [ "name" => $user, "password" => $pass, "admin" => true]; 
             
             // Llamar a la DB
             $userDB = $this->model->getByUser($userdata["name"]);
@@ -44,7 +40,7 @@
             if(empty($userDB))
                 return $this->view->response(['msg'=> 'Usuario no encontrado'],401);
 
-            if(!password_verify($userdata["password"], $userDB->password)){
+            if(!password_verify($userdata["password"], $userDB->Password)){
                 return $this->view->response(['msg'=> 'Contraseña incorrecta'],401);
             }
             else{

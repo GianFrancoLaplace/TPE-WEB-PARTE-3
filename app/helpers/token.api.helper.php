@@ -1,6 +1,6 @@
 <?php
 
-include_once 'config.php';
+require_once 'config.php';
 
 function base64url_encode($data) { 
     //cadena codificada en Base64 
@@ -19,12 +19,14 @@ function base64url_encode($data) {
 class TokenApiHelper {
 
     public static function getAuthHeaders() { //devolver header de autenticacion
+        
         $header = "";
         //hay dos lugares para buscar
         if(isset($_SERVER['HTTP_AUTHORIZATION']))
             $header = $_SERVER['HTTP_AUTHORIZATION'];
         if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
             $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+
         return $header;
     }
 
@@ -39,7 +41,7 @@ class TokenApiHelper {
 
         ///Parte 2: payload => info util de userData
         $expirationTime = time() + JWT_EXP;
-        $payload['exp'] = $expirationTime; 
+        $payload['exp'] = $expirationTime;  //cuando agregas un tiempo de exp y cambia la firma cambia
         
         //primero convertimos el arreglo en json luego convertimos en string de json
         $header = base64url_encode(json_encode($header)); 
@@ -57,6 +59,9 @@ class TokenApiHelper {
     public static function verifyToken($token) {
         //$header.$payload.$signature
         $token = explode(".",$token);
+        if(count($token)!=JWT_LENGHT_TOKEN){
+            return false;
+        }
         $header = $token[0];
         $payload = $token[1];
         $signature = $token[2];

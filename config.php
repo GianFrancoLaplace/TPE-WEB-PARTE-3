@@ -6,3 +6,4 @@ const DB_PASS = '';
 const DB_NAME = 'gimnasio';
 const JWT_EXP = 3600;
 const JWT_KEY = 'clavesecreta';
+CONST JWT_LENGHT_TOKEN = 3;

@@ -83,21 +83,28 @@ class ProductApiController extends ApiController{
             return;
         }
 
-        if($user->role!="admin"){
+        if($user->admin=false){
             $this->view->response("Prohibido", 403);
             return;
         }
 
         $product = $this->getData();
-        $name = $product->name;
-        $des = $product->des;
-        $price = $product->price;
-        $weight = $product->weight;
-        $category = $product->category;
-        $brand = $product->brand;
-        $img = $product->img;
 
-        $id = $this->model->insert($name, $des, $price, $weight, ucfirst($category), $brand, $img);
-        $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
+        if(isset($product)){
+            $name = $product->name;
+            $des = $product->des;
+            $price = $product->price;
+            $weight = $product->weight;
+            $category = $product->category;
+            $brand = $product->brand; //mandar brand con id
+            $img = $product->img;
+
+            $id = $this->model->insert($name, $des, $price, $weight, ucfirst($category), $brand, $img); 
+            $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
+            return;
+        }else{
+            $this->view->response("Faltan ingresar datos del producto", 400);
+            return;
+        }
     }
 }

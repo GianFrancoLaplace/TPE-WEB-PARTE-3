@@ -1,6 +1,7 @@
 <IfModule mod_rewrite.c>
     CGIPassAuth On
-	RewriteEngine On
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} ^(.+)$
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
     RewriteCond %{REQUEST_FILENAME} -f [OR]
