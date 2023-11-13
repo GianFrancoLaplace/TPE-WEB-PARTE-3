@@ -8,7 +8,7 @@ GET  | http://localhost/TPE-WEB-PARTE-3/api/productos
 
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
   - Crear un producto con los siguientes parametros
-    - {
+     {
       "name": "Nombre del Producto",
       "des": "Descripción del Producto",
       "price": 00,
