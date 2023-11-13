@@ -96,6 +96,16 @@ class ProductApiController extends ApiController{
             $brand = $product->brand; //mandar brand con id
             $img = $product->img;
 
+            // {
+            //     "name": "Nombre del Producto",
+            //     "des": "Descripción del Producto",
+            //     "price": 19.99,
+            //     "weight": 0.5,
+            //     "category": "Electrónicos",
+            //     "brand": "Marca XYZ",
+            //     "img": "imagen.jpg"
+            // }
+
             $id = $this->model->insert($name, $des, $price, $weight, ucfirst($category), $brand, $img); 
             $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
             return;
