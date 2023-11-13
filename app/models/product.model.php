@@ -51,7 +51,7 @@
             $query->execute([$nuevaDescripcion, $id]);
         }
         
-        function updatePrecio($id, $nuevoPrecio) {
+        function updatePrice($nuevoPrecio, $id) {
             $query = $this->db->prepare('UPDATE productos SET Precio = ? WHERE id = ?');
             $query->execute([$nuevoPrecio, $id]);
         }
@@ -69,6 +69,11 @@
         function updateMarca($id, $nuevaMarca) {
             $query = $this->db->prepare('UPDATE productos SET ID_Marca = ? WHERE id = ?');
             $query->execute([$nuevaMarca, $id]);
+        }
+
+        function update($id, $field, $value) {
+            $query = $this->db->prepare("UPDATE productos SET $field = ? WHERE id = ?");
+            $query->execute([$value, $id]);
         }
 
         function insert($name, $des, $price, $weight, $category, $brand, $img) {

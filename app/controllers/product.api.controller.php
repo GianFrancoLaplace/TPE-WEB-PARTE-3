@@ -87,7 +87,7 @@ class ProductApiController extends ApiController{
 
         $product = $this->getData();
 
-        if(isset($product)){
+        if(empty($product)){
             $name = $product->name;
             $des = $product->des;
             $price = $product->price;
@@ -108,6 +108,42 @@ class ProductApiController extends ApiController{
 
             $id = $this->model->insert($name, $des, $price, $weight, ucfirst($category), $brand, $img); 
             $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
+            return;
+        }else{
+            $this->view->response("Faltan ingresar datos del producto", 400);
+            return;
+        }
+    }
+
+    function update($params = []){
+        $user = TokenApiHelper::currentUser();
+
+        var_dump($_GET);
+
+        if(!$user){
+            $this->view->response("No autorizado",401);
+            return;
+        }
+
+        if($user->admin=false){
+            $this->view->response("Prohibido", 403);
+            return;
+        }        
+
+        $data = $this->getData();
+        
+        $newValue = $data->price;
+
+        $id = $params[":ID"];
+
+        if (!isset($id)) {
+            $this->view->response(['msg' => 'Producto id=' . $id .' no ha sido encontrado'], 404);
+            return;
+        }
+
+        if(!empty($newValue) && is_numeric($newValue)){
+            $this->model->updatePrice($newValue, $id); 
+            $this->view->response(['msg' => 'Se modificó el producto con el id = '.$id], 201);
             return;
         }else{
             $this->view->response("Faltan ingresar datos del producto", 400);
