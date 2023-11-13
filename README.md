@@ -3,9 +3,7 @@ Gian Franco Laplace Schwindt y Joaquin Block.
 
 # ENDPOINTS:
 GET  | http://localhost/TPE-WEB-PARTE-3/api/productos 
-
   - Devuelve todos los productos.
-  
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
   Crear un producto con los siguientes parametros
   {
