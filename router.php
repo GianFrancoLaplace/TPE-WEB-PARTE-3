@@ -11,6 +11,7 @@ $router->addRoute("auth", "POST", "AuthApiController", "login");
 
 #                 endpoint      verbo     controller           método
 $router->addRoute('productos', 'GET', 'ProductApiController', 'get'); # ProductApiController->get($params)
+$router->addRoute('productos?category=', 'GET', 'ProductApiController', 'get');
 $router->addRoute('productos/:ID', 'GET', 'ProductApiController', 'get');
 $router->addRoute('productos', 'POST', 'ProductApiController', 'create');
 $router->addRoute('productos/:ID', 'PUT', 'ProductApiController', 'update');

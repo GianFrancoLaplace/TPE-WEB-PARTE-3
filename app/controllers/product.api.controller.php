@@ -13,32 +13,44 @@ class ProductApiController extends ApiController{
     }
 
     function get($params = []) {
-        var_dump($_GET);
-        die();
         if(empty($params)){
 
-            //prodcuto?orden=asc
+            //producto?orden=asc
             $filterCategory = null;
             $orderByPrice = null;
             $productos = $this->model->getAll();
-            
             //producto?category=creatina
-            if (isset($_GET['category'])) {
-                $filterCategory = $_GET['category']; //creatina
-                $productos = $this->model->getCategory($filterCategory);
+            if (isset($_GET['categoria'])) {
+                $filterCategory = $_GET['categoria']; //creatina
+                if ($filterCategory == 'creatina' || $filterCategory == 'proteina' || $filterCategory == 'aminoacidos'){
+                    $productos = $this->model->getCategory(ucfirst($filterCategory));
+                }
             }
 
-            // Verifica si se proporciona el parámetro 'order' en la URL
-            if (isset($_GET['order'])) {
-                $order = explode('.',$_GET['order']); //price.asc o name.desc
-                if($order[1]=='asc')
-                    $productos = $this->model->getOrderAsc($order[0]);
-                else 
-                    $productos = $this->model->getOrderDesc($order[0]);
+            // Verifica si se proporciona el parámetro 'orden' en la URL
+            if (isset($_GET['orden'])) {
+                $order = explode('.',$_GET['orden']); //price.asc o name.desc
+                if(isset($order[0]) && isset($order[1])){
+                    if($order[0]=='precio'){
+                        if($order[1]=='asc'){
+                            $productos = $this->model->getPrecioAsc();
+                        }
+                        if($order[1]=='desc'){
+                            $productos = $this->model->getPrecioDesc();
+                        }
+                    }
+                    if($order[0]=='nombre'){
+                        if($order[1]=='asc'){
+                            $productos = $this->model->getNombreAsc();
+                        }
+                        if($order[1]=='desc'){
+                            $productos = $this->model->getNombreDesc();
+                        }
+                    }
+                }
             }
-
-            // Devuelve la respuesta con los productos
-            return $this->view->response($productos, 200);
+             // Devuelve la respuesta con los productos
+             return $this->view->response($productos, 200);
         }
         else {
             //producto/2
@@ -85,7 +97,7 @@ class ProductApiController extends ApiController{
         $brand = $product->brand;
         $img = $product->img;
 
-        $id = $this->model->insert($name, $des, $price, $weight, $category, $brand, $img);
+        $id = $this->model->insert($name, $des, $price, $weight, ucfirst($category), $brand, $img);
         $this->view->response(['msg' => 'La tarea fue insertada con el id = '.$id], 201);
     }
 }
