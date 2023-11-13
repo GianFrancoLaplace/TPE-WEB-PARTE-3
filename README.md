@@ -3,18 +3,20 @@ Gian Franco Laplace Schwindt y Joaquin Block.
 
 # ENDPOINTS:
 GET  | http://localhost/TPE-WEB-PARTE-3/api/productos 
+
   - Devuelve todos los productos.
+
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
-  Crear un producto con los siguientes parametros
-  {
-  "name": "Nombre del Producto",
-  "des": "Descripción del Producto",
-  "price": 00,
-  "weight": 0.0,
-  "category": "categoria",
-  "brand": "Marca",
-  "img": "imagen.jpg"
-  }
+  - Crear un producto con los siguientes parametros
+    - {
+      "name": "Nombre del Producto",
+      "des": "Descripción del Producto",
+      "price": 00,
+      "weight": 0.0,
+      "category": "categoria",
+      "brand": "Marca",
+      "img": "imagen.jpg"
+      }
   
 GET | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
   obtiene uno de los productos con el id indicado;
