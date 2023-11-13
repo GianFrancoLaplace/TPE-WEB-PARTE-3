@@ -84,6 +84,20 @@
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
 
+        function getOrderAsc($params){
+            $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY '.$params. ' ASC'
+            $query = $this->db->prepare($stg);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        function getOrderDesc($params){
+            $stg = 'SELECT ID, Nombre, Precio FROM productos ORDER BY '.$params.' DESC';
+            $query = $this->db->prepare($stg);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
+
         function updateNombre($id, $nuevoNombre) {
             $query = $this->db->prepare('UPDATE productos SET Nombre = ? WHERE id = ?');
             $query->execute([$nuevoNombre, $id]);
