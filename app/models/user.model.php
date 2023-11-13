@@ -9,6 +9,24 @@
             $this->adminUser = $this->getUserAdmin();
             $this->password_hashed = $this->getPasswordAdmin();
             $this->registerUser($this->adminUser, $this->password_hashed);
+            $this->_deploy();
+        }
+
+        function _deploy(){
+            $query = $this->db->query('SHOW TABLES LIKE "usuarios"');
+            $tables = $query->fetchAll();
+            if (count($tables) == 0) {
+                $sql = <<<END
+            CREATE TABLE `usuarios` (
+                `ID` int(11) NOT NULL AUTO_INCREMENT,
+                `User` varchar(100) NOT NULL,
+                `Password` varchar(100) NOT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    END;
+                $this->db->query($sql);
+                $this->registerUser($this->getUserAdmin(), $this->getPasswordAdmin());
+            }
         }
 
         function getByUser($user){

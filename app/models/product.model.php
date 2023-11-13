@@ -5,6 +5,29 @@
     class ProductModel extends Model{
         function __construct(){
             parent::__construct();
+            $this->_deploy();
+        }
+    
+        function _deploy(){
+            $query = $this->db->query('SHOW TABLES LIKE "productos"');
+            $tables = $query->fetchAll();
+                if (count($tables) == 0) {
+                    $sql = <<<END
+                CREATE TABLE `productos` (
+                    `ID` int(11) NOT NULL AUTO_INCREMENT,
+                    `Nombre` varchar(100) NOT NULL,
+                    `Descripcion` text NOT NULL,
+                    `Precio` double NOT NULL,
+                    `Peso` double NOT NULL,
+                    `Categoria` varchar(45) NOT NULL,
+                    `ID_Marca` int(11) NOT NULL,
+                    `Img` text NOT NULL,
+                    PRIMARY KEY (`ID`),
+                    FOREIGN KEY (`ID_Marca`) REFERENCES `marcas` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            END;
+                    $this->db->query($sql);
+            }
         }
         //listado de todo
 
@@ -40,40 +63,10 @@
             
             return $query->fetchAll(PDO::FETCH_OBJ);
         }
-
-        function updateNombre($id, $nuevoNombre) {
-            $query = $this->db->prepare('UPDATE productos SET Nombre = ? WHERE id = ?');
-            $query->execute([$nuevoNombre, $id]);
-        }
-        
-        function updateDescripcion($id, $nuevaDescripcion) {
-            $query = $this->db->prepare('UPDATE productos SET Descripcion = ? WHERE id = ?');
-            $query->execute([$nuevaDescripcion, $id]);
-        }
         
         function updatePrice($nuevoPrecio, $id) {
             $query = $this->db->prepare('UPDATE productos SET Precio = ? WHERE id = ?');
             $query->execute([$nuevoPrecio, $id]);
-        }
-
-        function updatePeso($id, $nuevoPeso) {
-            $query = $this->db->prepare('UPDATE productos SET Peso = ? WHERE id = ?');
-            $query->execute([$nuevoPeso, $id]);
-        }
-        
-        function updateCategoria($id, $nuevaCategoria) {
-            $query = $this->db->prepare('UPDATE productos SET Categoria = ? WHERE id = ?');
-            $query->execute([$nuevaCategoria, $id]);
-        }
-        
-        function updateMarca($id, $nuevaMarca) {
-            $query = $this->db->prepare('UPDATE productos SET ID_Marca = ? WHERE id = ?');
-            $query->execute([$nuevaMarca, $id]);
-        }
-
-        function update($id, $field, $value) {
-            $query = $this->db->prepare("UPDATE productos SET $field = ? WHERE id = ?");
-            $query->execute([$value, $id]);
         }
 
         function insert($name, $des, $price, $weight, $category, $brand, $img) {
@@ -89,7 +82,6 @@
             $query -> execute([$id]);
         }
     }
-
 //todos los productos de origen Argentino 
 //SELECT a.Nombre, a.Precio FROM productos a INNER JOIN marcas b ON a.ID_Marca = b.ID WHERE b.Pais_Origen = 'Argentina'
 
