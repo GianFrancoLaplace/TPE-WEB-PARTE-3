@@ -19,8 +19,14 @@ GET | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
 GET | http://localhost/TPE-WEB-PARTE-3/api/user/:token
 
   - Se usa para que un usuario obtenga un token de validación  para acceder a los servicios deseados que requieren autenticación.
+  - consulta GET -- authorization -- Basic Auth
+  - usuario: "webadmin", contraseña:"admin"
 
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
+  
+  - Se requiere autenticación
+  - consulta GET -- authorization -- Bearer Token  token= resultado que de el GET user/:token
+  - Luego de autenticarse
   - Crear un producto con los siguientes parametros
 
      `{
@@ -35,7 +41,11 @@ POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
   
 PUT | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
 
-  - Permite actualizar el precio
+  - Se requiere autenticación
+  - consulta GET -- authorization -- Bearer Token  token= resultado que de el GET user/:token
+  - Luego de autenticarse
+  - Permite actualizar el precio con el siguiente parametros.
+    
     `{
       "price": 00
     }`
