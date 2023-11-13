@@ -17,7 +17,7 @@ $router->addRoute('productos', 'POST', 'ProductApiController', 'create');
 $router->addRoute('productos/:ID', 'PUT', 'ProductApiController', 'update');
 $router->addRoute('productos/:ID', 'DELETE', 'ProductApiController', 'delete');
 
-$router->addRoute('user/token', 'GET', 'AuthApiController', 'getToken'); # AuthApiController->getToken()
+$router->addRoute('user/:token', 'GET', 'AuthApiController', 'getToken'); # AuthApiController->getToken()
 
 #               del htaccess resource=(), verbo con el que llamo GET/POST/PUT/etc
 $router->route($_GET['resource'], $_SERVER['REQUEST_METHOD']);

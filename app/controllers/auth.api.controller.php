@@ -14,6 +14,9 @@
             //Obtengo encabezado de autorizacion:
             $basic = TokenApiHelper::getAuthHeaders(); // Darnos el header 'Authorization:' 'Basic: base64(usr:pass)'
 
+            var_dump($_SERVER);
+            die();
+
             if(empty($basic)) {
                 $this->view->response('No envió encabezados de autenticación.', 401);
                 return;
