@@ -14,14 +14,14 @@ GET  | http://localhost/TPE-WEB-PARTE-3/api/productos
 
 GET | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
 
-  - obtiene uno de los productos con el id indicado;
+  - Servicio que obtiene uno de los productos con el id indicado;
 
 GET | http://localhost/TPE-WEB-PARTE-3/api/user/:token
 
-  - Se usa para que un usuario obtenga un token de validación  para acceder a los servicios deseados que requieren autenticación.
+  - Servicio que se usa para que un usuario obtenga un token de validación  para acceder a los servicios deseados que requieren autenticación.
 
 POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
-  - Crear un producto con los siguientes parametros
+  - Servicio que se usa para crear un producto con los siguientes parametros:
 
      `{
       "name": "Nombre del Producto",
@@ -35,12 +35,12 @@ POST  | http://localhost/TPE-WEB-PARTE-3/api/productos/
   
 PUT | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
 
-  - Permite actualizar el precio
+  - Servicio que permite actualizar el precio
     `{
       "price": 00
     }`
   
 DELETE | http://localhost/TPE-WEB-PARTE-3/api/productos/ID
 
-  - Elimina el producto con el id indicado
+  - Servicio que su usa para eliminar el producto con el id indicado
 
